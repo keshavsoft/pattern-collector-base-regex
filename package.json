@@ -1,7 +1,7 @@
 {
   "name": "pattern-collector-base-regex",
   "version": "1.2.1",
-  "description": "A high-performance pattern collector and ESM import statement analyzer.",
+  "description": "A high-performance utility to run a single line against a custom parser regular expression and extract captured groups.",
   "keywords": [
     "pattern",
     "regex",
