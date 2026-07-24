@@ -15,9 +15,13 @@
 
 ## 📖 Overview
 
-`pattern-collector-base-regex` is a lightweight helper designed to parse a specific text line against a capturing Regular Expression. It returns the first two captured groups as an object containing `variable` and `folderName`.
+`pattern-collector-base-regex` is a lightweight helper designed to parse a specific text line against a capturing Regular Expression.
 
-This is typically used downstream inside file segment extractors to isolate variables, aliases, route subdirectories, or specific file path tokens from a matched line of code.
+For any given input string, the utility extracts specific captured groups:
+*   `variable` / `poka`: The first captured group (typically representing the input variable/alias, e.g., the router alias).
+*   `folderName` / `raka`: The second captured group (typically representing the folder name or output destination, e.g., the directory path).
+
+This design ensures that for any given string, we build and extract both the input alias (`poka`) and the output directory (`raka`) entirely from that string alone. This is typically used downstream inside file segment extractors to isolate variables, aliases, route subdirectories, or specific file path tokens from a matched line of code.
 
 ---
 
@@ -46,7 +50,7 @@ npm install pattern-collector-base-regex
 An options object containing:
 
 *   **`matchLine`** `(string)`: The raw text line to match (e.g., an import or route usage line).
-*   **`parseRegex`** `(RegExp)`: A regular expression with capture groups to extract specific variables (`variable`) and folder names (`folderName`).
+*   **`parseRegex`** `(RegExp)`: A regular expression with capture groups to extract specific variables (`variable`, `poka`) and folder names (`folderName`, `raka`).
 *   **`showLog`** `(boolean)` *(optional)*: Whether to print debug logs.
 
 #### Returns
@@ -54,6 +58,8 @@ An options object containing:
 *   `Object` | `undefined`: If the line matches the regular expression, it returns an object containing:
     *   `variable` `(string)`: The first captured group.
     *   `folderName` `(string)`: The second captured group.
+    *   `raka` `(string)`: The second captured group (representing the output folder name).
+    *   `poka` `(string)`: The first captured group (representing the input variable/alias name).
     If there is no match, it returns `undefined`.
 
 ---
@@ -76,7 +82,9 @@ console.log(result);
 Output:
 {
   variable: 'routerFromv1',
-  folderName: 'v1'
+  folderName: 'v1',
+  raka: 'v1',
+  poka: 'routerFromv1'
 }
 */
 ```
